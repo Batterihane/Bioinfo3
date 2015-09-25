@@ -25,9 +25,9 @@ public class Exact {
         for(int i = 1 ; i < seq1.length + 1; i++){
             for(int j = 1 ; j < seq2.length + 1; j++){
                 for (int k = 1; k < seq3.length + 1; k++) {
-                    cij = seqMatrix.get(new CharPair(seq1[i], seq2[j]));
-                    cik = seqMatrix.get(new CharPair(seq1[i], seq3[k]));
-                    cjk = seqMatrix.get(new CharPair(seq2[j], seq3[k]));
+                    cij = seqMatrix.get(new CharPair(seq1[i-1], seq2[j-1]));
+                    cik = seqMatrix.get(new CharPair(seq1[i-1], seq3[k-1]));
+                    cjk = seqMatrix.get(new CharPair(seq2[j-1], seq3[k-1]));
 
                     d1 = resultMap[i-1][j-1][k-1] + cij + cik + cjk;
                     d2 = resultMap[i-1][j-1][k] + cij + 2*gapCost;
@@ -61,7 +61,7 @@ public class Exact {
         computeBoundaryResultMap(seq2, seq3);
         for (int j = 0; j < seq2.length + 1; j++) {
             for (int k = 0; k < seq3.length + 1; k++) {
-                result[j][k][0] = boundaryResultMap[j][k] + (j+k)*gapCost;
+                result[0][j][k] = boundaryResultMap[j][k] + (j+k)*gapCost;
             }
         }
         result[0][0][0] = 0;
