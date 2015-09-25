@@ -1,6 +1,7 @@
-package solution;
+package solution.tests;
 
-
+import solution.Approx;
+import solution.Exact;
 import solution.helpers.CentralSequenceFinder;
 import solution.helpers.CharPair;
 import solution.helpers.FastaParser;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Runner {
+public class ScoreExperimentRunner {
     public static void main(String[] args) throws Exception
     {
         Map<CharPair,Integer> seqMatrix;
@@ -51,3 +52,4 @@ public class Runner {
         System.out.println("approx scores: " + approxScores.toString());
     }
 }
+

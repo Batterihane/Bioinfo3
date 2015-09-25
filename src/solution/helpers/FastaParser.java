@@ -43,7 +43,6 @@ public class FastaParser {
         FastaParser fastaParser = new FastaParser("brca1-testseqs.fasta");
         List<char[]> resultList = fastaParser.parseFastaFile();
         System.out.println(resultList.toString());
-
         System.out.println("size: " + resultList.size());
     }
 
