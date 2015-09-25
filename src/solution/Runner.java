@@ -25,13 +25,15 @@ public class Runner {
         Exact exact = new Exact(seqMatrix, gapCost);
 
         FastaParser fastaParser = new FastaParser("brca1-testseqs.fasta");
-        List<char[]> resultList = fastaParser.parseFastaFile();
+        List<String> resultList = fastaParser.parseFastaFile();
 
-        int result = exact.calculateMinCost(resultList.get(0), resultList.get(1), resultList.get(2));
+        int result = exact.calculateMinCost(resultList.get(0).toCharArray(), resultList.get(1).toCharArray(), resultList.get(2).toCharArray());
 
         System.out.println(result);
 
         //solution.Prompter p = new solution.Prompter();
         //p.prompt();
+        Approx a = new Approx(seqMatrix,gapCost);
+        fastaParser
     }
 }

@@ -4,21 +4,27 @@ import solution.helpers.CharPair;
 import solution.helpers.LinearSequenceAligner;
 import solution.helpers.StringPair;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Thomas on 25-09-2015.
  */
 //MSA's are arrays of linkedlists
 public class Approx{
+
+
+
     StringBuilder sb;
     Map<CharPair, Integer> costmatrix;
     char[] center_seq;
     int gapcost;
     LinearSequenceAligner sa = new LinearSequenceAligner(costmatrix, gapcost);
+
+    public Approx(Map<CharPair,Integer> cm,int g){
+        costmatrix = cm;
+        gapcost = g;
+
+    }
 
 
     public LinkedList<Character>[] extend_MSA(LinkedList<Character>[] MSA, char[] newseq){
@@ -68,6 +74,19 @@ public class Approx{
     return res;
     }
 
+    public String[] MSA_to_strings(LinkedList<Character>[] MSA){
+        int n = MSA.length;
+        sb = new StringBuilder(MSA[0].size());
+        String[] res = new String[n];
+        for(int i=0;i<n;i++){
+            for(Character c:MSA[i]){
+                sb.append(c);
+            }
+            res[i]=sb.toString();
+        }
+        return res;
+    }
+
 
     public LinkedList<Character>[] sp_approx(List<char[]> seqs){//giver en MSA. Lav en score function der tæller den
         int n = seqs.size();
@@ -79,5 +98,7 @@ public class Approx{
             MSA = extend_MSA(MSA, s);
         }
         return MSA;
+        //List<String> str_list = MSA_to_strings(MSA);
+        //return str_list;
     }
 }
