@@ -118,6 +118,10 @@ public class Prompter {
 
 
     }
+
+    public static void main(String[] args) throws Exception {
+        new Prompter().prompt();
+    }
     public void printstuff(){
 
 
