@@ -1,6 +1,7 @@
 package solution;
 
 import solution.helpers.CharPair;
+import solution.helpers.StringPair;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Map;
@@ -101,5 +102,82 @@ public class Exact {
 
         boundaryResultMap[i][j] = Math.min(v1, Math.min(v2, Math.min(v3, v4)));
         return boundaryResultMap[i][j];
+    }
+
+    public String[] backtrack(char[] seq1, char[] seq2, char[] seq3){
+        return recBacktrack(seq1, seq2, seq3, resultMap.length-1, resultMap[0].length-1, resultMap[0][0].length-1, "", "", "");
+    }
+
+    private String[] recBacktrack(char[] seq1, char[] seq2, char[] seq3, int i, int j, int k, String res1, String res2, String res3){
+        int cij, cik, cjk;
+        if(i > 0 && j > 0 && k > 0){
+            cij = seqMatrix.get(new CharPair(seq1[i-1], seq2[j-1]));
+            cik = seqMatrix.get(new CharPair(seq1[i-1], seq3[k-1]));
+            cjk = seqMatrix.get(new CharPair(seq2[j-1], seq3[k-1]));
+
+            if(resultMap[i-1][j-1][k-1] + cij + cik + cjk == resultMap[i][j][k]){
+                res1 = seq1[i-1] + res1;
+                res2 = seq2[j-1] + res2;
+                res3 = seq3[k-1] + res3;
+                return recBacktrack(seq1, seq2, seq3, i-1, j-1, k-1, res1, res2, res3);
+            }
+        }
+        if(i > 0 && j > 0 && k >= 0){
+            cij = seqMatrix.get(new CharPair(seq1[i-1], seq2[j-1]));
+            if(resultMap[i-1][j-1][k] + cij + 2*gapCost == resultMap[i][j][k]){
+                res1 = seq1[i-1] + res1;
+                res2 = seq2[j-1] + res2;
+                res3 = "-" + res3;
+                return recBacktrack(seq1, seq2, seq3, i-1, j-1, k, res1, res2, res3);
+            }
+        }
+        if(i > 0 && j >= 0 && k > 0){
+            cik = seqMatrix.get(new CharPair(seq1[i-1], seq3[k-1]));
+            if(resultMap[i-1][j][k-1] + cik + 2*gapCost == resultMap[i][j][k]){
+                res1 = seq1[i-1] + res1;
+                res2 = "-" + res2;
+                res3 = seq3[k-1] + res3;
+                return recBacktrack(seq1, seq2, seq3, i-1, j, k-1, res1, res2, res3);
+            }
+        }
+        if(i >= 0 && j > 0 && k > 0){
+            cjk = seqMatrix.get(new CharPair(seq2[j-1], seq3[k-1]));
+            if(resultMap[i][j-1][k-1] + cjk + 2*gapCost == resultMap[i][j][k]){
+                res1 = "-" + res1;
+                res2 = seq2[j-1] + res2;
+                res3 = seq3[k-1] + res3;
+                return recBacktrack(seq1, seq2, seq3, i, j-1, k-1, res1, res2, res3);
+            }
+        }
+        if(i > 0 && j >= 0 && k >= 0){
+            if(resultMap[i-1][j][k] + 2*gapCost == resultMap[i][j][k]){
+                res1 = seq1[i-1] + res1;
+                res2 = "-" + res2;
+                res3 = "-" + res3;
+                return recBacktrack(seq1, seq2, seq3, i-1, j, k, res1, res2, res3);
+            }
+        }
+        if(i >= 0 && j > 0 && k >= 0){
+            if(resultMap[i][j-1][k] + 2*gapCost == resultMap[i][j][k]){
+                res1 = "-" + res1;
+                res2 = seq2[j-1] + res2;
+                res3 = "-" + res3;
+                return recBacktrack(seq1, seq2, seq3, i, j-1, k, res1, res2, res3);
+            }
+        }
+        if(i >= 0 && j >= 0 && k > 0){
+            if(resultMap[i][j][k-1] + 2*gapCost == resultMap[i][j][k]){
+                res1 = "-" + res1;
+                res2 = "-" + res2;
+                res3 = seq3[k-1] + res3;
+                return recBacktrack(seq1, seq2, seq3, i, j, k-1, res1, res2, res3);
+            }
+        }
+
+        String[] result = new String[3];
+        result[0] = res1;
+        result[1] = res2;
+        result[2] = res3;
+        return result;
     }
 }
