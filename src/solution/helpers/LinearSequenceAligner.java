@@ -49,11 +49,11 @@ public class LinearSequenceAligner {
         return resultMap[i][j];
     }
 
-    public String backtrack(char[] seq1, char[] seq2){
+    public StringPair backtrack(char[] seq1, char[] seq2){
         return recBacktrack(seq1, seq2, resultMap.length-1, resultMap[0].length-1, "", "");
     }
 
-    public String recBacktrack(char[] seq1, char[] seq2, int i, int j, String res1, String res2){
+    public StringPair recBacktrack(char[] seq1, char[] seq2, int i, int j, String res1, String res2){
         if(i > 0 && j > 0){
             if(resultMap[i-1][j-1] + seqMatrix.get(new CharPair(seq1[i-1], seq2[j-1])) == resultMap[i][j]){
                 res1 = seq1[i-1] + res1;
@@ -75,7 +75,7 @@ public class LinearSequenceAligner {
                 return recBacktrack(seq1, seq2, i, j-1, res1, res2);
             }
         }
-        return res1 + "\n\n" + res2;
+        return new StringPair(res1,res2);
     }
 }
 
