@@ -4,6 +4,7 @@ package solution;
 import solution.helpers.CharPair;
 import solution.helpers.FastaParser;
 import solution.helpers.MatrixParser;
+import solution.tests.AlignmentToCost;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,8 @@ public class ExactRunner {
         System.out.println(allignment[0]);
         System.out.println(allignment[1]);
         System.out.println(allignment[2]);
+
+        System.out.println(AlignmentToCost.calculateCost(seqMatrix, gapCost, allignment));
 
         //solution.Prompter p = new solution.Prompter();
         //p.prompt();
