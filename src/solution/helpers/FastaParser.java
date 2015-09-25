@@ -13,8 +13,8 @@ public class FastaParser {
         file = new File(filePathName);
     }
 
-    public List<String> parseFastaFile() throws FileNotFoundException {
-        ArrayList<String> resultList = new ArrayList<>();
+    public List<char[]> parseFastaFile() throws FileNotFoundException {
+        ArrayList<char[]> resultList = new ArrayList<>();
         boolean first = true;
         String accLine = "";
 
@@ -26,7 +26,7 @@ public class FastaParser {
                         first = false;
                     else
                     {
-                        resultList.add(accLine);
+                        resultList.add(accLine.toCharArray());
                         accLine = "";
                     }
                 }
@@ -35,13 +35,13 @@ public class FastaParser {
                 }
             }
         }
-        resultList.add(accLine);
+        resultList.add(accLine.toCharArray());
         return resultList;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         FastaParser fastaParser = new FastaParser("brca1-testseqs.fasta");
-        List<String> resultList = fastaParser.parseFastaFile();
+        List<char[]> resultList = fastaParser.parseFastaFile();
         System.out.println(resultList.toString());
 
         System.out.println("size: " + resultList.size());

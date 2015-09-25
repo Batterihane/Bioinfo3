@@ -24,10 +24,10 @@ public class Runner {
 
         Exact exact = new Exact(seqMatrix, gapCost);
 
-        FastaParser fastaParser = new FastaParser("test2.fasta");
-        List<String> resultList = fastaParser.parseFastaFile();
+        FastaParser fastaParser = new FastaParser("brca1-testseqs.fasta");
+        List<char[]> resultList = fastaParser.parseFastaFile();
 
-        int result = exact.calculateMinCost(resultList.get(0).toCharArray(), resultList.get(1).toCharArray(), resultList.get(2).toCharArray());
+        int result = exact.calculateMinCost(resultList.get(0), resultList.get(1), resultList.get(2));
 
         System.out.println(result);
 
