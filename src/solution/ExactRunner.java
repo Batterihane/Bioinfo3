@@ -23,7 +23,7 @@ public class ExactRunner {
 
         Exact exact = new Exact(seqMatrix, gapCost);
 
-        FastaParser fastaParser = new FastaParser("test2.fasta");
+        FastaParser fastaParser = new FastaParser("brca1-testseqs.fasta");
         List<char[]> resultList = fastaParser.parseFastaFile();
 
         seq1 = resultList.get(0);

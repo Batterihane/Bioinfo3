@@ -91,12 +91,10 @@ public class Approx{
     public String[] sp_approx(List<char[]> seqs){//giver en MSA. Lav en score function der tæller den
         int n = seqs.size();
         LinkedList<Character>[] MSA = new LinkedList[n];
-        int index_of_center_sequence = 0; //you can try other centerseqs for better results
-        center_seq = seqs.get(index_of_center_sequence);
-        seqs.remove(index_of_center_sequence);
+        center_seq = seqs.get(0);
         MSA[0] = convert(center_seq);
-        for (char[] s:seqs) {
-            extend_MSA(MSA, s);
+        for (int i=1;i<seqs.size();i++) {
+            extend_MSA(MSA, seqs.get(i));
         }
         String[] str_list = MSA_to_strings(MSA);
         return str_list;
