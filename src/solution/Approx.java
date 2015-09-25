@@ -12,54 +12,54 @@ import java.util.*;
 //MSA's are arrays of linkedlists
 public class Approx{
 
-
-
     StringBuilder sb;
     Map<CharPair, Integer> costmatrix;
     char[] center_seq;
     int gapcost;
-    LinearSequenceAligner sa = new LinearSequenceAligner(costmatrix, gapcost);
+    LinearSequenceAligner sa;
 
     public Approx(Map<CharPair,Integer> cm,int g){
         costmatrix = cm;
         gapcost = g;
+        sa = new LinearSequenceAligner(costmatrix, gapcost);
 
     }
 
 
     public LinkedList<Character>[] extend_MSA(LinkedList<Character>[] MSA, char[] newseq){
-        LinkedList<Character> newseq_as_list = convert(newseq);
+
         sa.calculateMinCost(center_seq, newseq);
         StringPair alignment = sa.backtrack(center_seq, newseq);
+        LinkedList<Character> newseq_as_list = convert(alignment.getB().toCharArray());
         int j=0;
         char[] arra = alignment.getA().toCharArray();
         //calc new seq
-        for(int i=0; i<MSA[0].size();i++){ //iter gennem MSA[0]
+        Character c;
+        Character a;
 
-
-            Character c = MSA[0].get(i);
-            Character a = arra[j];
+        for(int i=0; i<MSA[0].size() || j < arra.length; i++){ //iter gennem MSA[0]
+            c = i < MSA[0].size() ? MSA[0].get(i) : '_';
+            a = j < arra.length ? arra[j] : '_';
 
             if(c.equals(a)){ //matches, go next
                 j++;
             }
-            else if(c.equals('-')){//gap not in pair, add gap in b
+            else if(c.equals('-')){//gap not in pair, add gap in a
                 newseq_as_list.add(i,'-');
             }
             else{ //there was a gap in pair, add gappy column and go next
+                j++;
                 for (LinkedList<Character> l:MSA){
-                    l.add(i,'-');
-                    j++;
+                    if(l!=null) {
+                        l.add(i, '-');
+                    }
                 }
             }
-            i++;
         }
         //add new seq to MSA
         int k=1;
-        List a=MSA[1];
-        while( a != null){
+        while( MSA[k] != null){
             k++;
-            a=MSA[k];
         }
         MSA[k]=newseq_as_list;
 
@@ -76,9 +76,9 @@ public class Approx{
 
     public String[] MSA_to_strings(LinkedList<Character>[] MSA){
         int n = MSA.length;
-        sb = new StringBuilder(MSA[0].size());
         String[] res = new String[n];
         for(int i=0;i<n;i++){
+            sb = new StringBuilder(MSA[0].size());
             for(Character c:MSA[i]){
                 sb.append(c);
             }
@@ -88,17 +88,17 @@ public class Approx{
     }
 
 
-    public LinkedList<Character>[] sp_approx(List<char[]> seqs){//giver en MSA. Lav en score function der tæller den
+    public String[] sp_approx(List<char[]> seqs){//giver en MSA. Lav en score function der tæller den
         int n = seqs.size();
         LinkedList<Character>[] MSA = new LinkedList[n];
         int index_of_center_sequence = 0; //you can try other centerseqs for better results
         center_seq = seqs.get(index_of_center_sequence);
         seqs.remove(index_of_center_sequence);
+        MSA[0] = convert(center_seq);
         for (char[] s:seqs) {
-            MSA = extend_MSA(MSA, s);
+            extend_MSA(MSA, s);
         }
-        return MSA;
-        //List<String> str_list = MSA_to_strings(MSA);
-        //return str_list;
+        String[] str_list = MSA_to_strings(MSA);
+        return str_list;
     }
 }

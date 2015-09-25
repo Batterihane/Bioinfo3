@@ -5,6 +5,7 @@ import solution.helpers.CharPair;
 import solution.helpers.FastaParser;
 import solution.helpers.MatrixParser;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -25,15 +26,16 @@ public class Runner {
         Exact exact = new Exact(seqMatrix, gapCost);
 
         FastaParser fastaParser = new FastaParser("brca1-testseqs.fasta");
-        List<String> resultList = fastaParser.parseFastaFile();
+        List<char[]> resultList = fastaParser.parseFastaFile();
 
-        int result = exact.calculateMinCost(resultList.get(0).toCharArray(), resultList.get(1).toCharArray(), resultList.get(2).toCharArray());
+        Approx a = new Approx(seqMatrix,gapCost);
+        String[] res = a.sp_approx(resultList);
 
-        System.out.println(result);
+        for (int i = 0; i < res.length; i++) {
+            System.out.println(res[i]);
+        }
 
         //solution.Prompter p = new solution.Prompter();
         //p.prompt();
-        Approx a = new Approx(seqMatrix,gapCost);
-        fastaParser
     }
 }
