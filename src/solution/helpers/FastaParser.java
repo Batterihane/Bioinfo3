@@ -45,7 +45,6 @@ public class FastaParser {
         System.out.println(resultList.toString());
 
         System.out.println("size: " + resultList.size());
-
     }
 
 
