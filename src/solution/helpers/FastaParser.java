@@ -21,7 +21,7 @@ public class FastaParser {
         try (Scanner sc = new Scanner(file)) {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
-                if (line.charAt(0) == '>') {
+                if (!(line.length() == 0) && line.charAt(0) == '>') {
                     if (first)
                         first = false;
                     else
