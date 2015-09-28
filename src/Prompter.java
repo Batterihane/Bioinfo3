@@ -61,7 +61,7 @@ public class Prompter {
                 "\"cost\" to see score matrix and gap cost\n\t" +
                 "\"exact_3\" to compute an MSA of 3 sequences with the exact algorithm and see its score\n\t" +
                 "\"approx\" to show an MSA with the approximation algorithm and see its score\n\t\t"+
-                    "if there are more than three sequences in the fasta file loaded, the algorithm will be run on the first three elements\n\t" +
+                    "if there are more than three sequences in the fasta file loaded, the algorithm will be run on the first X elements\n\t" +
                 "\"q\" to quit\n\t"
         );
 
@@ -94,7 +94,7 @@ public class Prompter {
                     break;
                 case "A":
                 case "APPROX":
-                    System.out.println("How many?");
+                    System.out.println("How many sequences from the file do you want to consider?");
                     inp = sc.next();
                     String[] MSA = approx.sp_approx(l.subList(0,Integer.parseInt(inp)));
                     for (int i = 0; i < MSA.length; i++) {

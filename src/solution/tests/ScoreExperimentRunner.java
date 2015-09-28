@@ -22,6 +22,7 @@ public class ScoreExperimentRunner {
         matrixParser.parseFile("costMatrix.txt");
         seqMatrix = matrixParser.getCostMatrix();
         gapCost = matrixParser.getGapCostAlpha();
+        System.out.println(gapCost);
 
         ArrayList<Integer> exactScores = new ArrayList<>();
         ArrayList<Integer> approxScores = new ArrayList<>();
@@ -50,6 +51,8 @@ public class ScoreExperimentRunner {
 
         System.out.println("exact scores: " + exactScores.toString());
         System.out.println("approx scores: " + approxScores.toString());
+
     }
+
 }
 
