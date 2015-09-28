@@ -1,9 +1,6 @@
 import solution.Approx;
 import solution.Exact;
-import solution.helpers.CharPair;
-import solution.helpers.FastaParser;
-import solution.helpers.FastaWriter;
-import solution.helpers.MatrixParser;
+import solution.helpers.*;
 import solution.tests.AlignmentToCost;
 
 import java.io.File;
@@ -61,7 +58,7 @@ public class Prompter {
                 "\"cost\" to see score matrix and gap cost\n\t" +
                 "\"exact_3\" to compute an MSA of 3 sequences with the exact algorithm and see its score\n\t" +
                 "\"approx\" to show an MSA with the approximation algorithm and see its score\n\t\t"+
-                    "if there are more than three sequences in the fasta file loaded, the algorithm will be run on the first X elements\n\t" +
+                     "the algorithm will be run on the first X elements\n\t" +
                 "\"q\" to quit\n\t"
         );
 
@@ -89,6 +86,7 @@ public class Prompter {
                     String[] res = exact.backtrack(l.get(0),l.get(1),l.get(2));
                     for (int i = 0; i < res.length; i++) {
                         System.out.println(res[i]);
+                        System.out.println();
                     }
                     System.out.println(costResult);
                     break;
@@ -96,9 +94,12 @@ public class Prompter {
                 case "APPROX":
                     System.out.println("How many sequences from the file do you want to consider?");
                     inp = sc.next();
-                    String[] MSA = approx.sp_approx(l.subList(0,Integer.parseInt(inp)));
+                    List<char[]> subList = l.subList(0, Integer.parseInt(inp));
+                    CentralSequenceFinder.findCentralSequence(seqMatrix, gapCostAlpha,subList);
+                    String[] MSA = approx.sp_approx(subList);
                     for (int i = 0; i < MSA.length; i++) {
                         System.out.println(MSA[i]);
+                        System.out.println();
                     }
                     System.out.println(AlignmentToCost.calculateCost(seqMatrix, gapCostAlpha, MSA));
                      //   writer.writeSequences(alignmentSplit[0], alignmentSplit[1]);
@@ -107,7 +108,6 @@ public class Prompter {
                     break;
                 default:
                     System.out.println("Invalid command!\n"+s);
-
 
             }
         }
