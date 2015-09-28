@@ -1,14 +1,13 @@
-package solution.helpers;
-
 import solution.Approx;
 import solution.Exact;
+import solution.helpers.CharPair;
+import solution.helpers.FastaParser;
+import solution.helpers.FastaWriter;
+import solution.helpers.MatrixParser;
 import solution.tests.AlignmentToCost;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
