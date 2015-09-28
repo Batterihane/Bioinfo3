@@ -13,7 +13,7 @@ public class FastaParser {
         file = new File(filePathName);
     }
 
-    public List<char[]> parseFastaFile() throws FileNotFoundException {
+    public ArrayList<char[]> parseFastaFile() throws FileNotFoundException {
         ArrayList<char[]> resultList = new ArrayList<>();
         boolean first = true;
         String accLine = "";

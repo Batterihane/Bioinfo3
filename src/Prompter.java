@@ -5,6 +5,7 @@ import solution.tests.AlignmentToCost;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -27,7 +28,7 @@ public class Prompter {
     File f;
     Exact exact;
     Approx approx;
-    List<char[]> l;
+    ArrayList<char[]> l;
     public Prompter() throws Exception {
         writer = new FastaWriter("alignment");
         sc = new Scanner(System.in);
@@ -94,7 +95,8 @@ public class Prompter {
                 case "APPROX":
                     System.out.println("How many sequences from the file do you want to consider?");
                     inp = sc.next();
-                    List<char[]> subList = l.subList(0, Integer.parseInt(inp));
+                    ArrayList<char[]> clonedList = (ArrayList)l.clone();
+                    List<char[]> subList = clonedList.subList(0, Integer.parseInt(inp));
                     CentralSequenceFinder.findCentralSequence(seqMatrix, gapCostAlpha,subList);
                     String[] MSA = approx.sp_approx(subList);
                     for (int i = 0; i < MSA.length; i++) {
