@@ -26,7 +26,7 @@ public class FastaParser {
                         first = false;
                     else
                     {
-                        resultList.add(accLine.toCharArray());
+                        resultList.add(accLine.replaceAll("[NRS]", "A").toCharArray());
                         accLine = "";
                     }
                 }
@@ -35,7 +35,7 @@ public class FastaParser {
                 }
             }
         }
-        resultList.add(accLine.toCharArray());
+        resultList.add(accLine.replaceAll("[NRS]", "A").toCharArray());
         return resultList;
     }
 

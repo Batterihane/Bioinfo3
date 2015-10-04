@@ -14,12 +14,11 @@ public class FastaWriter {
         writer = new PrintWriter(filename + ".fasta", "UTF-8");
     }
 
-    public void writeSequences(String seq1, String seq2){
-        writer.println(">seq1");
-        writer.println(seq1);
-        writer.println();
-        writer.println(">seq2");
-        writer.println(seq2);
+    public void writeSequences(String ... seqs){
+        for (int i = 0; i < seqs.length; i++) {
+            writer.println(">seq" + (i+1));
+            writer.println(seqs[i]);
+        }
         writer.close();
     }
 }

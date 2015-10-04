@@ -1,10 +1,7 @@
 package solution;
 
 
-import solution.helpers.CentralSequenceFinder;
-import solution.helpers.CharPair;
-import solution.helpers.FastaParser;
-import solution.helpers.MatrixParser;
+import solution.helpers.*;
 import solution.tests.AlignmentToCost;
 
 import java.util.ArrayList;
@@ -12,6 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 public class Runner {
+
+    public static final String INPUT_FILE_NAME = "brca1-full";
+    public static final String OUTPUT_FILE_FOLDER = "results\\";
+    public static final String OUTPUT_FILE_ENDING = "-result";
+    public static final String FASTA_FILE_ENDING = ".fasta";
+
     public static void main(String[] args) throws Exception
     {
         Map<CharPair,Integer> seqMatrix;
@@ -22,19 +25,30 @@ public class Runner {
         seqMatrix = matrixParser.getCostMatrix();
         gapCost = matrixParser.getGapCostAlpha();
 
-        FastaParser fastaParser = new FastaParser("brca1-testseqs.fasta");
-        List<char[]> resultList = fastaParser.parseFastaFile().subList(0, 5);
+        FastaParser fastaParser = new FastaParser(INPUT_FILE_NAME + FASTA_FILE_ENDING);
+        FastaWriter writer = new FastaWriter(OUTPUT_FILE_FOLDER + INPUT_FILE_NAME + OUTPUT_FILE_ENDING + FASTA_FILE_ENDING);
+        List<char[]> resultList = fastaParser.parseFastaFile(); //.subList(0, 6);
+
+        for(char[] foo : resultList){
+            for(char bar : foo){
+                if(bar != 'A' && bar != 'C' && bar != 'T' && bar != 'G'){
+                    System.out.println("Her: " + bar);
+                }
+            }
+        }
 
         Approx a = new Approx(seqMatrix,gapCost);
         resultList = CentralSequenceFinder.findCentralSequence(seqMatrix, gapCost, resultList);
-//        String[] res = a.sp_approx(resultList);
-//
-//        for (int i = 0; i < res.length; i++) {
-//            System.out.println(res[i]);
-//        }
-//
-//        System.out.println(AlignmentToCost.calculateCost(seqMatrix, gapCost, res));
-        runAllCombinationsOfApprox(seqMatrix, gapCost, resultList, a);
+        String[] res = a.sp_approx(resultList);
+
+        writer.writeSequences(res);
+        for (int i = 0; i < res.length; i++) {
+            System.out.println(res[i]);
+        }
+
+        System.out.println(AlignmentToCost.calculateCost(seqMatrix, gapCost, res));
+
+        //runAllCombinationsOfApprox(seqMatrix, gapCost, resultList, a);
 
         //solution.Prompter p = new solution.Prompter();
         //p.prompt();
