@@ -3,6 +3,7 @@ package solution;
 
 import solution.helpers.CharPair;
 import solution.helpers.FastaParser;
+import solution.helpers.FastaWriter;
 import solution.helpers.MatrixParser;
 import solution.tests.AlignmentToCost;
 
@@ -24,6 +25,7 @@ public class ExactRunner {
         Exact exact = new Exact(seqMatrix, gapCost);
 
         FastaParser fastaParser = new FastaParser("brca1-testseqs.fasta");
+        FastaWriter writer = new FastaWriter("results\\brca1-testseqs-result3.fasta");
         List<char[]> resultList = fastaParser.parseFastaFile();
 
         seq1 = resultList.get(0);
@@ -38,6 +40,8 @@ public class ExactRunner {
         System.out.println(allignment[0]);
         System.out.println(allignment[1]);
         System.out.println(allignment[2]);
+
+        writer.writeSequences(allignment);
 
         System.out.println(AlignmentToCost.calculateCost(seqMatrix, gapCost, allignment));
 
