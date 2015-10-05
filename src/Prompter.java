@@ -65,7 +65,7 @@ public class Prompter {
 
         System.out.println(s);
         String inp = "";
-        while(!(inp.equals("Q")|| inp.equals("QUIT"))){
+        while(!(inp.equals("Q") || inp.equals("QUIT"))){
             inp = sc.next().toUpperCase();
 
             switch (inp) {
@@ -107,6 +107,7 @@ public class Prompter {
                      //   writer.writeSequences(alignmentSplit[0], alignmentSplit[1]);
                     break;
                 case "Q"://do nothing and then it will quit
+                case "QUIT":
                     break;
                 default:
                     System.out.println("Invalid command!\n"+s);
